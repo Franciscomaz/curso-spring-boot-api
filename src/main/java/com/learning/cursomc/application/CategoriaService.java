@@ -16,7 +16,9 @@ public class CategoriaService {
     }
 
     public Categoria buscarPelo(Long id) {
-        return categoriaRepository.getOne(id);
+        return categoriaRepository
+                .findById(id)
+                .orElse(null);
     }
 
     public List<Categoria> buscarTodas() {
