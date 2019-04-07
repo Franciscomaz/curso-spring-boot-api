@@ -1,6 +1,7 @@
 package com.learning.cursomc.application;
 
-import com.learning.cursomc.domain.Categoria;
+import com.learning.cursomc.domain.categoria.Categoria;
+import com.learning.cursomc.domain.categoria.CategoriaNaoEncontrada;
 import com.learning.cursomc.infrastructure.persistence.CategoriaRepository;
 import org.springframework.stereotype.Component;
 
@@ -15,10 +16,10 @@ public class CategoriaService {
         this.categoriaRepository = categoriaRepository;
     }
 
-    public Categoria buscarPelo(Long id) {
+    public Categoria buscarPelo(Long id) throws CategoriaNaoEncontrada {
         return categoriaRepository
                 .findById(id)
-                .orElse(null);
+                .orElseThrow(CategoriaNaoEncontrada::new);
     }
 
     public List<Categoria> buscarTodas() {

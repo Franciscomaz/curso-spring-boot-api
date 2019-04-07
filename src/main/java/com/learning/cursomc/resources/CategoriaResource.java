@@ -1,7 +1,8 @@
 package com.learning.cursomc.resources;
 
 import com.learning.cursomc.application.CategoriaService;
-import com.learning.cursomc.domain.Categoria;
+import com.learning.cursomc.domain.categoria.Categoria;
+import com.learning.cursomc.domain.categoria.CategoriaNaoEncontrada;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class CategoriaResource {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Categoria buscarPelo(@PathVariable("id") Long id) {
+    public Categoria buscarPelo(@PathVariable("id") Long id) throws CategoriaNaoEncontrada {
         return categoriaService.buscarPelo(id);
     }
 

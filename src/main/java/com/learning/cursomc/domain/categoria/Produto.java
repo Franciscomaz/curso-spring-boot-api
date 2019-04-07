@@ -1,4 +1,6 @@
-package com.learning.cursomc.domain;
+package com.learning.cursomc.domain.categoria;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,6 +19,7 @@ public class Produto implements Serializable {
     private String nome;
     private BigDecimal preco;
 
+    @JsonBackReference
     @ManyToMany
     @JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private List<Categoria> categorias;
