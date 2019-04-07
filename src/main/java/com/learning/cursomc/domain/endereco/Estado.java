@@ -1,6 +1,4 @@
-package com.learning.cursomc.domain.categoria;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+package com.learning.cursomc.domain.endereco;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Categoria implements Serializable {
+public class Estado implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,18 +15,18 @@ public class Categoria implements Serializable {
 
     private String nome;
 
-    @JsonManagedReference
-    @ManyToMany(mappedBy = "categorias")
-    private List<Produto> produtos;
+    @OneToMany(mappedBy = "estado")
+    private List<Cidade> cidades;
 
-    public Categoria() {
-        this.produtos = new ArrayList<>();
+    public Estado() {
+        cidades = new ArrayList<>();
     }
 
-    public Categoria(Long id, String nome) {
+    public Estado(Long id, String nome) {
         super();
         this.id = id;
         this.nome = nome;
+        this.cidades = cidades;
     }
 
     public Long getId() {
@@ -47,20 +45,20 @@ public class Categoria implements Serializable {
         this.nome = nome;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
+    public List<Cidade> getCidades() {
+        return cidades;
     }
 
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
+    public void setCidades(List<Cidade> cidades) {
+        this.cidades = cidades;
     }
 
     @Override
     public String toString() {
-        return "Categoria{" +
+        return "Estado{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
-                ", produtos=" + produtos +
+                ", cidades=" + cidades +
                 '}';
     }
 
@@ -68,13 +66,13 @@ public class Categoria implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Categoria categoria = (Categoria) o;
-        return Objects.equals(id, categoria.id) &&
-                Objects.equals(nome, categoria.nome);
+        Estado estado = (Estado) o;
+        return Objects.equals(id, estado.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome);
+        return Objects.hash(id);
     }
+
 }
