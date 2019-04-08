@@ -1,4 +1,4 @@
-package com.learning.cursomc.domain.endereco;
+package com.learning.cursomc.domain.cliente.endereco;
 
 import javax.persistence.*;
 import java.io.Serializable;

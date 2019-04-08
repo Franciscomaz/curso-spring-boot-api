@@ -2,12 +2,12 @@ package com.learning.cursomc;
 
 import com.learning.cursomc.domain.categoria.Categoria;
 import com.learning.cursomc.domain.categoria.Produto;
-import com.learning.cursomc.domain.endereco.Cidade;
-import com.learning.cursomc.domain.endereco.Estado;
-import com.learning.cursomc.infrastructure.persistence.CategoriaRepository;
-import com.learning.cursomc.infrastructure.persistence.CidadeRepository;
-import com.learning.cursomc.infrastructure.persistence.EstadoRepository;
-import com.learning.cursomc.infrastructure.persistence.ProdutoRepository;
+import com.learning.cursomc.domain.cliente.Cliente;
+import com.learning.cursomc.domain.cliente.TipoCliente;
+import com.learning.cursomc.domain.cliente.endereco.Cidade;
+import com.learning.cursomc.domain.cliente.endereco.Endereco;
+import com.learning.cursomc.domain.cliente.endereco.Estado;
+import com.learning.cursomc.infrastructure.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -31,6 +31,12 @@ public class CursomcApplication implements CommandLineRunner {
 
     @Autowired
     private CidadeRepository cidadeRepository;
+
+    @Autowired
+    private ClienteRepository clienteRepository;
+
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(CursomcApplication.class, args);
@@ -67,5 +73,16 @@ public class CursomcApplication implements CommandLineRunner {
 
         estadoRepository.saveAll(Arrays.asList(minasGerais, saoPauloEstado));
         cidadeRepository.saveAll(Arrays.asList(uberlandia, saoPauloCidade, campinas));
+
+        Cliente maria = new Cliente(null, "Maria Silva", "maria@gmail.com", "3678912377", TipoCliente.PESSOA_FISICA);
+        maria.getTelefones().addAll(Arrays.asList("2736878", "999021313"));
+
+        Endereco endereco1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "3898932", maria, saoPauloCidade);
+        Endereco endereco2 = new Endereco(null, "Avenidade Matos", "105", "Sala 800", "Centro", "3898932", maria, saoPauloCidade);
+
+        maria.setEnderecos(Arrays.asList(endereco1, endereco2));
+
+        clienteRepository.save(maria);
+        enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));
     }
 }
