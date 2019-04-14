@@ -1,14 +1,14 @@
 package com.learning.cursomc;
 
-import com.learning.cursomc.domain.categoria.Categoria;
-import com.learning.cursomc.domain.categoria.Produto;
-import com.learning.cursomc.domain.cliente.Cliente;
-import com.learning.cursomc.domain.cliente.TipoCliente;
-import com.learning.cursomc.domain.cliente.endereco.Cidade;
-import com.learning.cursomc.domain.cliente.endereco.Endereco;
-import com.learning.cursomc.domain.cliente.endereco.Estado;
-import com.learning.cursomc.domain.pedido.*;
-import com.learning.cursomc.infrastructure.persistence.*;
+import com.learning.cursomc.store.domain.categoria.Categoria;
+import com.learning.cursomc.store.domain.categoria.Produto;
+import com.learning.cursomc.store.domain.cliente.Cliente;
+import com.learning.cursomc.store.domain.cliente.TipoCliente;
+import com.learning.cursomc.store.domain.cliente.endereco.Cidade;
+import com.learning.cursomc.store.domain.cliente.endereco.Endereco;
+import com.learning.cursomc.store.domain.cliente.endereco.Estado;
+import com.learning.cursomc.store.domain.pedido.*;
+import com.learning.cursomc.store.infrastructure.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
