@@ -1,5 +1,6 @@
 package com.learning.cursomc.domain.pedido;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.learning.cursomc.domain.categoria.Produto;
 
 import javax.persistence.Embeddable;

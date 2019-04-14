@@ -1,4 +1,4 @@
-package com.learning.cursomc.application.Categoria;
+package com.learning.cursomc.application.categoria;
 
 import com.learning.cursomc.domain.categoria.Categoria;
 import com.learning.cursomc.domain.categoria.CategoriaNaoEncontrada;

@@ -1,6 +1,6 @@
-package com.learning.cursomc.resources.Categoria;
+package com.learning.cursomc.resources.categoria;
 
-import com.learning.cursomc.application.Categoria.CategoriaService;
+import com.learning.cursomc.application.categoria.CategoriaService;
 import com.learning.cursomc.domain.categoria.Categoria;
 import com.learning.cursomc.domain.categoria.CategoriaNaoEncontrada;
 import org.springframework.web.bind.annotation.*;

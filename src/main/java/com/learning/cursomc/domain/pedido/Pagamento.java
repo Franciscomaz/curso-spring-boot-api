@@ -1,5 +1,7 @@
 package com.learning.cursomc.domain.pedido;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,9 +14,10 @@ public abstract class Pagamento implements Serializable {
     private Long id;
     private Integer estadoPagamento;
 
-    @OneToOne
-    @JoinColumn(name = "pedido_id")
     @MapsId
+    @OneToOne
+    @JsonBackReference
+    @JoinColumn(name = "pedido_id")
     private Pedido pedido;
 
     public Pagamento() {

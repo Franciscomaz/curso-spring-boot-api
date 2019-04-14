@@ -1,12 +1,17 @@
 package com.learning.cursomc.domain.pedido;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Entity;
 import java.time.LocalDateTime;
 
 @Entity
 public class PagamentoComBoleto extends Pagamento{
 
+    @JsonFormat(pattern = "dd/mm/yyyy HH:mm")
     private LocalDateTime dataVencimento;
+
+    @JsonFormat(pattern = "dd/mm/yyyy HH:mm")
     private LocalDateTime dataPagamento;
 
     public PagamentoComBoleto() {

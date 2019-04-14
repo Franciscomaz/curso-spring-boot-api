@@ -1,6 +1,6 @@
-package com.learning.cursomc.resources.Cliente;
+package com.learning.cursomc.resources.cliente;
 
-import com.learning.cursomc.application.Cliente.ClienteService;
+import com.learning.cursomc.application.cliente.ClienteService;
 import com.learning.cursomc.domain.cliente.Cliente;
 import com.learning.cursomc.domain.cliente.ClienteNaoEncontrado;
 import org.springframework.web.bind.annotation.*;

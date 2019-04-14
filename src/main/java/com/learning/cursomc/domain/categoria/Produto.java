@@ -1,6 +1,7 @@
 package com.learning.cursomc.domain.categoria;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.learning.cursomc.domain.pedido.ItemPedido;
 import com.learning.cursomc.domain.pedido.Pedido;
 
@@ -25,6 +26,7 @@ public class Produto implements Serializable {
     @JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private List<Categoria> categorias;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id.pedido")
     private Set<ItemPedido> itens = new HashSet<>();
 
@@ -79,6 +81,7 @@ public class Produto implements Serializable {
         this.itens = itens;
     }
 
+    @JsonIgnore
     public List<Pedido> getPedidos() {
         return itens
                 .stream()

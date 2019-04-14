@@ -1,4 +1,4 @@
-package com.learning.cursomc.application.Cliente;
+package com.learning.cursomc.application.cliente;
 
 import com.learning.cursomc.domain.cliente.Cliente;
 import com.learning.cursomc.domain.cliente.ClienteNaoEncontrado;
