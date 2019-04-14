@@ -7,13 +7,19 @@ import com.learning.cursomc.domain.cliente.TipoCliente;
 import com.learning.cursomc.domain.cliente.endereco.Cidade;
 import com.learning.cursomc.domain.cliente.endereco.Endereco;
 import com.learning.cursomc.domain.cliente.endereco.Estado;
+import com.learning.cursomc.domain.pedido.*;
 import com.learning.cursomc.infrastructure.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import javax.persistence.PersistenceProperty;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -37,6 +43,13 @@ public class CursomcApplication implements CommandLineRunner {
 
     @Autowired
     private EnderecoRepository enderecoRepository;
+
+    @Autowired
+    private PedidoRepository pedidoRepository;
+
+
+    @Autowired
+    private PagamentoRepository pagamentoRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(CursomcApplication.class, args);
@@ -80,9 +93,23 @@ public class CursomcApplication implements CommandLineRunner {
         Endereco endereco1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "3898932", maria, saoPauloCidade);
         Endereco endereco2 = new Endereco(null, "Avenidade Matos", "105", "Sala 800", "Centro", "3898932", maria, saoPauloCidade);
 
-        maria.setEnderecos(Arrays.asList(endereco1, endereco2));
 
+        maria.setEnderecos(Arrays.asList(endereco1, endereco2));
         clienteRepository.save(maria);
         enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));
+
+        Pedido ped1 = new Pedido(null, LocalDateTime.now(), maria, endereco1);
+        Pedido ped2 = new Pedido(null, LocalDateTime.now(), maria, endereco2);
+
+        Pagamento pagamento1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1,6);
+        ped1.setPagamento(pagamento1);
+
+        Pagamento pagamento2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, LocalDateTime.now(), null);
+        ped2.setPagamento(pagamento2);
+
+        maria.setPedidos(Arrays.asList(ped1, ped2));
+
+        pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+        pagamentoRepository.saveAll(Arrays.asList(pagamento1, pagamento2));
     }
 }

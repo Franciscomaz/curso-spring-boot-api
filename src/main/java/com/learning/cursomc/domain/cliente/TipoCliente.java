@@ -5,19 +5,19 @@ public enum TipoCliente {
     PESSOA_JURIDICA(2, "Pessoa Jurídica");
 
     private int codigo;
-    private String nome;
+    private String descricao;
 
-    TipoCliente(int codigo, String nome) {
+    TipoCliente(int codigo, String descricao) {
         this.codigo = codigo;
-        this.nome = nome;
+        this.descricao = descricao;
     }
 
     public int getCodigo() {
         return codigo;
     }
 
-    public String getNome() {
-        return nome;
+    public String getDescricao() {
+        return descricao;
     }
 
     public static TipoCliente toEnum(Integer codigo) {
