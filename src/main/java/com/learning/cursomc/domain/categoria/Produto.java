@@ -1,13 +1,14 @@
 package com.learning.cursomc.domain.categoria;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.learning.cursomc.domain.pedido.ItemPedido;
+import com.learning.cursomc.domain.pedido.Pedido;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 public class Produto implements Serializable {
@@ -23,6 +24,9 @@ public class Produto implements Serializable {
     @ManyToMany
     @JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private List<Categoria> categorias;
+
+    @OneToMany(mappedBy = "id.pedido")
+    private Set<ItemPedido> itens = new HashSet<>();
 
     public Produto() {
         categorias = new ArrayList<>();
@@ -65,6 +69,21 @@ public class Produto implements Serializable {
 
     public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
+    }
+
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<ItemPedido> itens) {
+        this.itens = itens;
+    }
+
+    public List<Pedido> getPedidos() {
+        return itens
+                .stream()
+                .map(ItemPedido::getPedido)
+                .collect(Collectors.toList());
     }
 
     @Override

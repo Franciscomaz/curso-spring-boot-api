@@ -14,12 +14,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import javax.persistence.PersistenceProperty;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -47,9 +43,11 @@ public class CursomcApplication implements CommandLineRunner {
     @Autowired
     private PedidoRepository pedidoRepository;
 
-
     @Autowired
     private PagamentoRepository pagamentoRepository;
+
+    @Autowired
+    private ItemPedidoRepository itemPedidoRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(CursomcApplication.class, args);
@@ -93,7 +91,6 @@ public class CursomcApplication implements CommandLineRunner {
         Endereco endereco1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "3898932", maria, saoPauloCidade);
         Endereco endereco2 = new Endereco(null, "Avenidade Matos", "105", "Sala 800", "Centro", "3898932", maria, saoPauloCidade);
 
-
         maria.setEnderecos(Arrays.asList(endereco1, endereco2));
         clienteRepository.save(maria);
         enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));
@@ -111,5 +108,18 @@ public class CursomcApplication implements CommandLineRunner {
 
         pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
         pagamentoRepository.saveAll(Arrays.asList(pagamento1, pagamento2));
+
+        ItemPedido itemPedido1 = new ItemPedido(ped1, computador, new BigDecimal("0.00"), 1, new BigDecimal("2000.00"));
+        ItemPedido itemPedido2 = new ItemPedido(ped1, mouse, new BigDecimal("0.00"), 2, new BigDecimal("80.00"));
+        ItemPedido itemPedido3 = new ItemPedido(ped2, impressora, new BigDecimal("100.00"), 1, new BigDecimal("8000"));
+
+        ped1.getItens().addAll(Arrays.asList(itemPedido1, itemPedido2));
+        ped2.getItens().addAll(Arrays.asList(itemPedido3));
+
+        computador.getItens().addAll(Arrays.asList(itemPedido1));
+        impressora.getItens().addAll(Arrays.asList(itemPedido3));
+        mouse.getItens().addAll(Arrays.asList(itemPedido2));
+
+        itemPedidoRepository.saveAll(Arrays.asList(itemPedido1, itemPedido2, itemPedido3));
     }
 }
