@@ -3,6 +3,8 @@ package com.learning.cursomc.store.application.pedido;
 import com.learning.cursomc.store.domain.pedido.Pedido;
 import com.learning.cursomc.store.domain.pedido.PedidoNaoEncontrado;
 import com.learning.cursomc.store.infrastructure.persistence.PedidoRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +24,8 @@ public class PedidoService {
                 .orElseThrow(PedidoNaoEncontrado::new);
     }
 
-    public List<Pedido> buscarTodas() {
-        return pedidoRepository.findAll();
+    public Page<Pedido> buscarTodas(final Pageable pageable) {
+        return pedidoRepository.findAll(pageable);
     }
 
     public Pedido criar(Pedido pedido) {

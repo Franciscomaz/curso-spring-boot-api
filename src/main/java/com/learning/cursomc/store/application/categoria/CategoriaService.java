@@ -3,9 +3,9 @@ package com.learning.cursomc.store.application.categoria;
 import com.learning.cursomc.store.domain.categoria.Categoria;
 import com.learning.cursomc.store.domain.categoria.CategoriaNaoEncontrada;
 import com.learning.cursomc.store.infrastructure.persistence.CategoriaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class CategoriaService {
@@ -22,8 +22,8 @@ public class CategoriaService {
                 .orElseThrow(CategoriaNaoEncontrada::new);
     }
 
-    public List<Categoria> buscarTodas() {
-        return categoriaRepository.findAll();
+    public Page<Categoria> buscarTodas(final Pageable pageable) {
+        return categoriaRepository.findAll(pageable);
     }
 
     public Categoria criar(Categoria categoria) {

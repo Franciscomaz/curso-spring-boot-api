@@ -1,14 +1,15 @@
 package com.learning.cursomc.store.resource.categoria;
 
+import com.learning.cursomc.core.resource.EntityURIBuilder;
 import com.learning.cursomc.store.application.categoria.CategoriaService;
 import com.learning.cursomc.store.domain.categoria.Categoria;
 import com.learning.cursomc.store.domain.categoria.CategoriaNaoEncontrada;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "categorias/")
@@ -21,34 +22,35 @@ public class CategoriaResource {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Categoria buscarPelo(@PathVariable("id") Long id) throws CategoriaNaoEncontrada {
-        return categoriaService.buscarPelo(id);
+    public ResponseEntity<Categoria> buscarPelo(@PathVariable("id") Long id) throws CategoriaNaoEncontrada {
+        return ResponseEntity.ok(categoriaService.buscarPelo(id));
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Categoria> buscarTodas() {
-        return categoriaService.buscarTodas();
+    public ResponseEntity<Page<Categoria>> buscarTodas(final Pageable pageable) {
+        return ResponseEntity.ok(categoriaService.buscarTodas(pageable));
+
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> criar(@RequestBody Categoria categoria) {
+    public ResponseEntity<Categoria> criar(@RequestBody Categoria categoria) {
         final Categoria categoriaAdicionada = categoriaService.criar(categoria);
-        final URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id]")
-                .buildAndExpand(categoriaAdicionada.getId())
-                .toUri();
+        final URI uri = EntityURIBuilder.created(categoria).build();
 
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity
+                .created(uri)
+                .body(categoriaAdicionada);
 
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public Categoria atualizar(@RequestBody Categoria categoria) {
-        return categoriaService.atualizar(categoria);
+    public ResponseEntity<Categoria> atualizar(@RequestBody Categoria categoria) {
+        return ResponseEntity.ok(categoriaService.atualizar(categoria));
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public Categoria deletar(@PathVariable("id") Long id) {
-        return null;
+    public ResponseEntity<Void> deletar(@PathVariable("id") Long id) {
+        categoriaService.deletar(categoriaService.buscarPelo(id));
+        return ResponseEntity.accepted().build();
     }
 }

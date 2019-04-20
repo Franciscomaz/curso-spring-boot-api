@@ -1,16 +1,20 @@
 package com.learning.cursomc.store.resource.cliente;
 
+import com.learning.cursomc.core.resource.EntityURIBuilder;
 import com.learning.cursomc.store.application.cliente.ClienteService;
 import com.learning.cursomc.store.domain.cliente.Cliente;
 import com.learning.cursomc.store.domain.cliente.ClienteNaoEncontrado;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.net.URI;
 
 @RestController
 @RequestMapping(value = "clientes/")
 public class ClienteResource {
-    
+
     private final ClienteService clienteService;
 
     public ClienteResource(ClienteService clienteService) {
@@ -18,28 +22,32 @@ public class ClienteResource {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Cliente buscarPelo(@PathVariable("id") Long id) throws ClienteNaoEncontrado {
-        return clienteService.buscarPelo(id);
+    public ResponseEntity<Cliente> buscarPelo(@PathVariable("id") Long id) throws ClienteNaoEncontrado {
+        return ResponseEntity.ok(clienteService.buscarPelo(id));
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Cliente> buscarTodas() {
-        return clienteService.buscarTodas();
+    public ResponseEntity<Page<Cliente>> buscarTodas(final Pageable pageable) {
+        return ResponseEntity.ok(clienteService.buscarTodas(pageable));
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Cliente criar(@RequestBody Cliente cliente) {
-        return clienteService.criar(cliente);
+    public ResponseEntity<Cliente> criar(@RequestBody Cliente cliente) {
+        final Cliente clienteAdicionado = clienteService.criar(cliente);
+        final URI uri = EntityURIBuilder.created(clienteAdicionado).build();
+
+        return ResponseEntity.created(uri).body(clienteAdicionado);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public Cliente atualizar(@RequestBody Cliente cliente) {
-        return clienteService.atualizar(cliente);
+    public ResponseEntity<Cliente> atualizar(@RequestBody Cliente cliente) {
+        return ResponseEntity.ok(clienteService.atualizar(cliente));
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public Cliente deletar(@PathVariable("id") Long id) {
-        return null;
+    public ResponseEntity<Void> deletar(@PathVariable("id") Long id) {
+        clienteService.deletar(clienteService.buscarPelo(id));
+        return ResponseEntity.accepted().build();
     }
-    
+
 }

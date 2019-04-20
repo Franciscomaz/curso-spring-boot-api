@@ -1,6 +1,7 @@
 package com.learning.cursomc.store.domain.cliente;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.learning.cursomc.core.domain.Entidade;
 import com.learning.cursomc.store.domain.cliente.endereco.Endereco;
 import com.learning.cursomc.store.domain.pedido.Pedido;
 
@@ -9,7 +10,7 @@ import java.io.Serializable;
 import java.util.*;
 
 @Entity
-public class Cliente implements Serializable {
+public class Cliente implements Entidade<Long>, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

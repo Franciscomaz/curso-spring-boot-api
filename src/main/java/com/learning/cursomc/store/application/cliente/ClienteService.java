@@ -3,6 +3,8 @@ package com.learning.cursomc.store.application.cliente;
 import com.learning.cursomc.store.domain.cliente.Cliente;
 import com.learning.cursomc.store.domain.cliente.ClienteNaoEncontrado;
 import com.learning.cursomc.store.infrastructure.persistence.ClienteRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,8 +24,8 @@ public class ClienteService {
                 .orElseThrow(ClienteNaoEncontrado::new);
     }
 
-    public List<Cliente> buscarTodas() {
-        return clienteRepository.findAll();
+    public Page<Cliente> buscarTodas(final Pageable pageable) {
+        return clienteRepository.findAll(pageable);
     }
 
     public Cliente criar(Cliente cliente) {

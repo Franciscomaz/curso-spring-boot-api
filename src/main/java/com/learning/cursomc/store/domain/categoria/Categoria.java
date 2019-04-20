@@ -1,5 +1,7 @@
 package com.learning.cursomc.store.domain.categoria;
 
+import com.learning.cursomc.core.domain.Entidade;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -7,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Categoria implements Serializable {
+public class Categoria implements Entidade<Long>, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
