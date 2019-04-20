@@ -3,8 +3,11 @@ package com.learning.cursomc.store.resource.categoria;
 import com.learning.cursomc.store.application.categoria.CategoriaService;
 import com.learning.cursomc.store.domain.categoria.Categoria;
 import com.learning.cursomc.store.domain.categoria.CategoriaNaoEncontrada;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -28,8 +31,15 @@ public class CategoriaResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Categoria criar(@RequestBody Categoria categoria) {
-        return categoriaService.criar(categoria);
+    public ResponseEntity<Void> criar(@RequestBody Categoria categoria) {
+        final Categoria categoriaAdicionada = categoriaService.criar(categoria);
+        final URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id]")
+                .buildAndExpand(categoriaAdicionada.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).build();
+
     }
 
     @RequestMapping(method = RequestMethod.PUT)

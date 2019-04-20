@@ -1,7 +1,6 @@
 package com.learning.cursomc.store.domain.pedido;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.learning.cursomc.store.domain.cliente.Cliente;
 import com.learning.cursomc.store.domain.cliente.endereco.Endereco;
 
@@ -22,12 +21,10 @@ public class Pedido implements Serializable {
     @JsonFormat(pattern = "dd/mm/yyyy HH:mm")
     private LocalDateTime instante;
 
-    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
     private Pagamento pagamento;
 
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 

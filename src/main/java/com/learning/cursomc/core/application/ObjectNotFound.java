@@ -1,4 +1,4 @@
-package com.learning.cursomc.common.application;
+package com.learning.cursomc.core.application;
 
 public class ObjectNotFound extends RuntimeException{
 

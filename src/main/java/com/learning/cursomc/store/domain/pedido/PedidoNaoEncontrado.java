@@ -1,6 +1,6 @@
 package com.learning.cursomc.store.domain.pedido;
 
-        import com.learning.cursomc.common.application.ObjectNotFound;
+        import com.learning.cursomc.core.application.ObjectNotFound;
 
 public class PedidoNaoEncontrado extends ObjectNotFound {
 

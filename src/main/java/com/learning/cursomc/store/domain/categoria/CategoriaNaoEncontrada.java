@@ -1,6 +1,6 @@
 package com.learning.cursomc.store.domain.categoria;
 
-import com.learning.cursomc.common.application.ObjectNotFound;
+import com.learning.cursomc.core.application.ObjectNotFound;
 
 public class CategoriaNaoEncontrada extends ObjectNotFound {
 

@@ -1,4 +1,4 @@
-package com.learning.cursomc.common.resource;
+package com.learning.cursomc.core.resource;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

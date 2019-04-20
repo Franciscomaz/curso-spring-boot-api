@@ -1,7 +1,6 @@
 package com.learning.cursomc.store.domain.cliente;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.learning.cursomc.store.domain.cliente.endereco.Endereco;
 import com.learning.cursomc.store.domain.pedido.Pedido;
 
@@ -20,11 +19,10 @@ public class Cliente implements Serializable {
     private String numeroDeCadastro;
     private Integer tipoCliente;
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<>();
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "cliente")
     private List<Endereco> enderecos = new ArrayList<>();
 

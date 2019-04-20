@@ -1,6 +1,6 @@
 package com.learning.cursomc.store.domain.categoria;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.learning.cursomc.store.domain.pedido.ItemPedido;
 import com.learning.cursomc.store.domain.pedido.Pedido;
@@ -21,7 +21,7 @@ public class Produto implements Serializable {
     private String nome;
     private BigDecimal preco;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private List<Categoria> categorias;

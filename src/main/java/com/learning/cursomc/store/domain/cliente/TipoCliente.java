@@ -1,10 +1,12 @@
 package com.learning.cursomc.store.domain.cliente;
 
-public enum TipoCliente {
+import com.learning.cursomc.core.application.DefaultEnum;
+
+public enum TipoCliente implements DefaultEnum {
     PESSOA_FISICA(1, "Pessoa Física"),
     PESSOA_JURIDICA(2, "Pessoa Jurídica");
 
-    private int codigo;
+    private Integer codigo;
     private String descricao;
 
     TipoCliente(int codigo, String descricao) {
@@ -12,7 +14,7 @@ public enum TipoCliente {
         this.descricao = descricao;
     }
 
-    public int getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
 

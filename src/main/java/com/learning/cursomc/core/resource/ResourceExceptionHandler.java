@@ -1,6 +1,6 @@
-package com.learning.cursomc.common.resource;
+package com.learning.cursomc.core.resource;
 
-import com.learning.cursomc.common.application.ObjectNotFound;
+import com.learning.cursomc.core.application.ObjectNotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
