@@ -1,6 +1,7 @@
 package com.learning.cursomc.store.domain.categoria;
 
 import com.learning.cursomc.core.domain.Entidade;
+import com.learning.cursomc.store.application.categoria.CategoriaDto;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -28,6 +29,10 @@ public class Categoria implements Entidade<Long>, Serializable {
         super();
         this.id = id;
         this.nome = nome;
+    }
+
+    public static Categoria fromRepresentation(final CategoriaDto representation) {
+        return new Categoria(representation.getId(), representation.getNome());
     }
 
     public Long getId() {

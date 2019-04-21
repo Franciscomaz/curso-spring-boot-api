@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -23,8 +24,8 @@ public class CategoriaResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Categoria> buscarPelo(@PathVariable("id") Long id) throws CategoriaNaoEncontrada {
-        return ResponseEntity.ok(categoriaService.buscarPelo(id));
+    public ResponseEntity<CategoriaDto> buscarPelo(@PathVariable("id") Long id) throws CategoriaNaoEncontrada {
+        return ResponseEntity.ok(CategoriaDto.fromEntity(categoriaService.buscarPelo(id)));
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -34,20 +35,22 @@ public class CategoriaResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Categoria> criar(@RequestBody Categoria categoria) {
-        final Categoria categoriaAdicionada = categoriaService.criar(categoria);
+    public ResponseEntity<CategoriaDto> criar(@Valid @RequestBody CategoriaDto representation) {
+        final Categoria categoria = categoriaService.criar(Categoria.fromRepresentation(representation));
         final URI uri = EntityURIBuilder.created(categoria).build();
 
         return ResponseEntity
                 .created(uri)
-                .body(categoriaAdicionada);
+                .body(CategoriaDto.fromEntity(categoria));
 
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Categoria> atualizar(@PathVariable("id") Long id, @RequestBody Categoria categoria) {
+    public ResponseEntity<CategoriaDto> atualizar(@PathVariable("id") Long id,
+                                                  @Valid @RequestBody CategoriaDto categoria) {
         categoria.setId(id);
-        return ResponseEntity.ok(categoriaService.atualizar(categoria));
+        final Categoria categoriaAtualizada = categoriaService.atualizar(Categoria.fromRepresentation(categoria));
+        return ResponseEntity.ok(CategoriaDto.fromEntity(categoriaAtualizada));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
