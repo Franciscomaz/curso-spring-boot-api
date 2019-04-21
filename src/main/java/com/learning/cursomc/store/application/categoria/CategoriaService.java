@@ -24,8 +24,8 @@ public class CategoriaService {
                 .orElseThrow(CategoriaNaoEncontrada::new);
     }
 
-    public Page<Categoria> buscarTodas(final Pageable pageable) {
-        return categoriaRepository.findAll(pageable);
+    public Page<CategoriaDto> buscarTodas(final Pageable pageable) {
+        return categoriaRepository.findAll(pageable).map(CategoriaDto::new);
     }
 
     public Categoria criar(Categoria categoria) {

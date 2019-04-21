@@ -1,6 +1,7 @@
 package com.learning.cursomc.store.resource.categoria;
 
 import com.learning.cursomc.core.resource.EntityURIBuilder;
+import com.learning.cursomc.store.application.categoria.CategoriaDto;
 import com.learning.cursomc.store.application.categoria.CategoriaService;
 import com.learning.cursomc.store.domain.categoria.Categoria;
 import com.learning.cursomc.store.domain.categoria.CategoriaNaoEncontrada;
@@ -27,7 +28,7 @@ public class CategoriaResource {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Page<Categoria>> buscarTodas(final Pageable pageable) {
+    public ResponseEntity<Page<CategoriaDto>> buscarTodas(final Pageable pageable) {
         return ResponseEntity.ok(categoriaService.buscarTodas(pageable));
 
     }
