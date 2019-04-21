@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
 @RestController
-@RequestMapping(value = "categorias/")
+@RequestMapping(value = "categorias")
 public class CategoriaResource {
 
     private final CategoriaService categoriaService;
@@ -21,7 +21,7 @@ public class CategoriaResource {
         this.categoriaService = categoriaService;
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Categoria> buscarPelo(@PathVariable("id") Long id) throws CategoriaNaoEncontrada {
         return ResponseEntity.ok(categoriaService.buscarPelo(id));
     }
@@ -43,14 +43,15 @@ public class CategoriaResource {
 
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<Categoria> atualizar(@RequestBody Categoria categoria) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Categoria> atualizar(@PathVariable("id") Long id, @RequestBody Categoria categoria) {
+        categoria.setId(id);
         return ResponseEntity.ok(categoriaService.atualizar(categoria));
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deletar(@PathVariable("id") Long id) {
         categoriaService.deletar(categoriaService.buscarPelo(id));
-        return ResponseEntity.accepted().build();
+        return ResponseEntity.noContent().build();
     }
 }

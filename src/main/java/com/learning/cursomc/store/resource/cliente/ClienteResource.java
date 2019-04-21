@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
 @RestController
-@RequestMapping(value = "clientes/")
+@RequestMapping(value = "clientes")
 public class ClienteResource {
 
     private final ClienteService clienteService;
@@ -21,7 +21,7 @@ public class ClienteResource {
         this.clienteService = clienteService;
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Cliente> buscarPelo(@PathVariable("id") Long id) throws ClienteNaoEncontrado {
         return ResponseEntity.ok(clienteService.buscarPelo(id));
     }
@@ -39,12 +39,13 @@ public class ClienteResource {
         return ResponseEntity.created(uri).body(clienteAdicionado);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<Cliente> atualizar(@RequestBody Cliente cliente) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Cliente> atualizar(@PathVariable("id") Long id, @RequestBody Cliente cliente) {
+        cliente.setId(id);
         return ResponseEntity.ok(clienteService.atualizar(cliente));
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deletar(@PathVariable("id") Long id) {
         clienteService.deletar(clienteService.buscarPelo(id));
         return ResponseEntity.accepted().build();

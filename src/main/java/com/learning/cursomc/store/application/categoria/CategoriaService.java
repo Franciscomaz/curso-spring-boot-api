@@ -1,8 +1,10 @@
 package com.learning.cursomc.store.application.categoria;
 
+import com.learning.cursomc.core.application.exception.DataIntegrityException;
 import com.learning.cursomc.store.domain.categoria.Categoria;
 import com.learning.cursomc.store.domain.categoria.CategoriaNaoEncontrada;
 import com.learning.cursomc.store.infrastructure.persistence.CategoriaRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -36,7 +38,12 @@ public class CategoriaService {
     }
 
     public Categoria deletar(Categoria categoria) {
-        categoriaRepository.delete(categoria);
+        try {
+            categoriaRepository.deleteById(categoria.getId());
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityException("A categoria " + categoria.getNome() + " possui registros dependentes");
+        }
+
         return categoria;
     }
 }
