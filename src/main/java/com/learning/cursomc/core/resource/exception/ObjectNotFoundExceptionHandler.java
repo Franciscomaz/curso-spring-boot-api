@@ -8,12 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.time.LocalDateTime;
+
 @ControllerAdvice
-public class ObjectNotFoundExceptionHandler extends StandardExceptionHandler {
+public class ObjectNotFoundExceptionHandler extends StandardExceptionHandler<ObjectNotFound> {
 
     @Override
     @ExceptionHandler(value = ObjectNotFound.class)
-    public ResponseEntity<StandardError> handleException(Exception e) {
-        return getResponse(e, HttpStatus.NOT_FOUND);
+    public ResponseEntity<StandardError> handleException(ObjectNotFound e) {
+        return getResponse(new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), LocalDateTime.now()), HttpStatus.NOT_FOUND);
     }
 }
