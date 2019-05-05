@@ -24,8 +24,8 @@ public class CategoriaService {
                 .orElseThrow(CategoriaNaoEncontrada::new);
     }
 
-    public Page<CategoriaDto> buscarTodas(final Pageable pageable) {
-        return categoriaRepository.findAll(pageable).map(CategoriaDto::new);
+    public Page<Categoria> buscarTodas(final Pageable pageable) {
+        return categoriaRepository.findAll(pageable);
     }
 
     public Categoria criar(Categoria categoria) {
@@ -33,8 +33,10 @@ public class CategoriaService {
         return categoriaRepository.save(categoria);
     }
 
-    public Categoria atualizar(Categoria categoria) {
-        return categoriaRepository.save(categoria);
+    public Categoria atualizar(Long id, Categoria categoriaComNovoNome) {
+        final Categoria categoriaASerAtualizada = buscarPelo(id);
+        categoriaASerAtualizada.setNome(categoriaComNovoNome.getNome());
+        return categoriaRepository.save(categoriaASerAtualizada);
     }
 
     public Categoria deletar(Categoria categoria) {

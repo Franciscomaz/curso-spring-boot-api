@@ -1,7 +1,7 @@
 package com.learning.cursomc.store.resource.categoria;
 
 import com.learning.cursomc.core.resource.EntityURIBuilder;
-import com.learning.cursomc.store.application.categoria.CategoriaDto;
+import com.learning.cursomc.store.application.categoria.CategoriaRepresentation;
 import com.learning.cursomc.store.application.categoria.CategoriaService;
 import com.learning.cursomc.store.domain.categoria.Categoria;
 import com.learning.cursomc.store.domain.categoria.CategoriaNaoEncontrada;
@@ -24,33 +24,32 @@ public class CategoriaResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<CategoriaDto> buscarPelo(@PathVariable("id") Long id) throws CategoriaNaoEncontrada {
-        return ResponseEntity.ok(CategoriaDto.fromEntity(categoriaService.buscarPelo(id)));
+    public ResponseEntity<CategoriaRepresentation> buscarPelo(@PathVariable("id") Long id) throws CategoriaNaoEncontrada {
+        return ResponseEntity.ok(CategoriaRepresentation.fromEntity(categoriaService.buscarPelo(id)));
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Page<CategoriaDto>> buscarTodas(final Pageable pageable) {
-        return ResponseEntity.ok(categoriaService.buscarTodas(pageable));
+    public ResponseEntity<Page<CategoriaRepresentation>> buscarTodas(final Pageable pageable) {
+        return ResponseEntity.ok(categoriaService.buscarTodas(pageable).map(CategoriaRepresentation::new));
 
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<CategoriaDto> criar(@Valid @RequestBody CategoriaDto representation) {
+    public ResponseEntity<CategoriaRepresentation> criar(@Valid @RequestBody CategoriaRepresentation representation) {
         final Categoria categoria = categoriaService.criar(Categoria.fromRepresentation(representation));
         final URI uri = EntityURIBuilder.created(categoria).build();
 
         return ResponseEntity
                 .created(uri)
-                .body(CategoriaDto.fromEntity(categoria));
+                .body(CategoriaRepresentation.fromEntity(categoria));
 
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<CategoriaDto> atualizar(@PathVariable("id") Long id,
-                                                  @Valid @RequestBody CategoriaDto categoria) {
-        categoria.setId(id);
-        final Categoria categoriaAtualizada = categoriaService.atualizar(Categoria.fromRepresentation(categoria));
-        return ResponseEntity.ok(CategoriaDto.fromEntity(categoriaAtualizada));
+    public ResponseEntity<CategoriaRepresentation> atualizar(@PathVariable("id") Long id,
+                                                             @Valid @RequestBody CategoriaRepresentation representation) {
+        final Categoria categoriaAtualizada = categoriaService.atualizar(id, Categoria.fromRepresentation(representation));
+        return ResponseEntity.ok(CategoriaRepresentation.fromEntity(categoriaAtualizada));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

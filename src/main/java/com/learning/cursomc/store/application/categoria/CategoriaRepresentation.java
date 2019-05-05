@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
-public class CategoriaDto implements Serializable {
+public class CategoriaRepresentation implements Serializable {
 
     private Long id;
 
@@ -14,16 +14,16 @@ public class CategoriaDto implements Serializable {
     @Length(min = 5, max = 80, message = "O campo nome precisa ter de 5 a 80 caracteres")
     private String nome;
 
-    public CategoriaDto() {
+    public CategoriaRepresentation() {
     }
 
-    public CategoriaDto(final Categoria categoria) {
+    public CategoriaRepresentation(final Categoria categoria) {
         this.id = categoria.getId();
         this.nome = categoria.getNome();
     }
 
-    public static CategoriaDto fromEntity(final Categoria categoria) {
-        return new CategoriaDto(categoria);
+    public static CategoriaRepresentation fromEntity(final Categoria categoria) {
+        return new CategoriaRepresentation(categoria);
     }
 
     public Long getId() {

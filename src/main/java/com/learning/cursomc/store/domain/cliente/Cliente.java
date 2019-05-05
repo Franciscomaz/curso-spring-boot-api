@@ -34,6 +34,12 @@ public class Cliente implements Entidade<Long>, Serializable {
     public Cliente() {
     }
 
+    public Cliente(Long id, String nome, String email) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+    }
+
     public Cliente(Long id,
                    String nome,
                    String email,

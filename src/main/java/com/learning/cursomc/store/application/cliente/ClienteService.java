@@ -1,13 +1,13 @@
 package com.learning.cursomc.store.application.cliente;
 
+import com.learning.cursomc.core.application.exception.DataIntegrityException;
 import com.learning.cursomc.store.domain.cliente.Cliente;
 import com.learning.cursomc.store.domain.cliente.ClienteNaoEncontrado;
 import com.learning.cursomc.store.infrastructure.persistence.ClienteRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class ClienteService {
@@ -32,13 +32,21 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-    public Cliente atualizar(Cliente cliente) {
-        return clienteRepository.save(cliente);
+    public Cliente atualizar(Long id, Cliente clienteComNovosDados) {
+        Cliente clienteASerAtualizado = buscarPelo(id);
+        clienteASerAtualizado.setNome(clienteComNovosDados.getNome());
+        clienteASerAtualizado.setEmail(clienteComNovosDados.getEmail());
+        return clienteRepository.save(clienteASerAtualizado);
     }
 
     public Cliente deletar(Cliente cliente) {
-        clienteRepository.delete(cliente);
+        try {
+            clienteRepository.delete(cliente);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityException("O cliente " + cliente.getNome() + " possui registros dependentes");
+        }
+
         return cliente;
     }
-    
+
 }
